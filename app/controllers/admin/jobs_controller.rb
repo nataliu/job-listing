@@ -1,5 +1,5 @@
-class JobsController < ApplicationController
-    before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy]
+class Admin::JobsController < ApplicationController
+  before_action :authenticate_user!, only:[:new,:create,:edit,:update,:destroy]
 
   def index
     @jobs = Job.all
@@ -9,22 +9,21 @@ class JobsController < ApplicationController
     @job = Job.new
   end
 
-  def edit
+  def show
     @job = Job.find(params[:id])
   end
 
-  def show
+  def edit
     @job = Job.find(params[:id])
   end
 
   def create
     @job = Job.new(job_params)
-    @job.user = current_user
 
     if @job.save
-       redirect_to jobs_path
+      redirect_to admin_jobs_path
     else
-       render :new
+      render :new
     end
   end
 
@@ -32,9 +31,9 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
 
     if @job.update(job_params)
-       redirect_to jobs_path, alert: "update successfully"
+      redirect_to admin_jobs_path
     else
-       render :edit
+      render :edit
     end
   end
 
@@ -42,13 +41,13 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
     @job.destroy
 
-    redirect_to jobs_path, warning: "deleted"
+    redirect_to admin_jobs_path
   end
 
   private
 
   def job_params
-    params.require(:job).permit(:title, :description)
+    params.require(:job).permit(:title,:description)
   end
 
 end
