@@ -2,23 +2,23 @@ class JobsController < ApplicationController
     before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy]
 
   def index
-    @ jobs = Job.all
+    @jobs = Job.all
   end
 
   def new
-    @ job = Job.new
+    @job = Job.new
   end
 
   def edit
-    @ job = Job.find(params[:id])
+    @job = Job.find(params[:id])
   end
 
   def show
-    @ job = Job.find(params[:id])
+    @job = Job.find(params[:id])
   end
 
   def create
-    @ job = Job.new(job_params)
+    @job = Job.new(job_params)
 
     if @job.save
        redirect_to jobs_path
@@ -27,25 +27,27 @@ class JobsController < ApplicationController
     end
   end
 
-  def udpate
-    @ job = Job.find(params[:id])
+  def update
+    @job = Job.find(params[:id])
 
-    if @job.update
-       redirect to jobs_path(job_params), alert : "update successfully"
+    if @job.update(job_params)
+       redirect_to jobs_path, alert: "update successfully"
     else
        render :edit
     end
   end
 
   def destroy
-    @ job = Job.find(params[:id]), warning: "deleted"
-    @ job.destroy
+    @job = Job.find(params[:id])
+    @job.destroy
+
+    redirect_to jobs_path, warning: "deleted"
   end
 
   private
 
   def job_params
-    params.require(:job).permit[:title, :description]
+    params.require(:job).permit(:title, :description)
   end
 
 end
