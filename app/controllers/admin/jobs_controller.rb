@@ -3,7 +3,7 @@ class Admin::JobsController < ApplicationController
   before_action :require_is_admin
 
   def index
-    @jobs = Job.where(:is_hidden => false)
+    @jobs = Job.where(:is_hidden => false).recent
   end
 
   def new
