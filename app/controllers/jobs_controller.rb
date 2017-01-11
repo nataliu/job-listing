@@ -1,4 +1,5 @@
-before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy]
+class JobsController < ApplicationController
+    before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy]
 
   def index
     @ jobs = Job.all
@@ -18,6 +19,7 @@ before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy
 
   def create
     @ job = Job.new(job_params)
+
     if @job.save
        redirect_to jobs_path
     else
@@ -27,6 +29,7 @@ before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy
 
   def udpate
     @ job = Job.find(params[:id])
+
     if @job.update
        redirect to jobs_path(job_params), alert : "update successfully"
     else
@@ -45,4 +48,4 @@ before_action :authenticate_user!, only:[:new, :create, :edit, :updata, :destroy
     params.require(:job).permit[:title, :description]
   end
 
-end 
+end
