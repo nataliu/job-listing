@@ -18,6 +18,7 @@
                                Hi!, <%= current_user.email %>
                             <b class="caret"></b>
                           </a>
+
                           <ul class="dropdown-menu">
                               <% if current_user.admin?  %>
                                   <li> <%= link_to("Admin Panel", admin_jobs_path) %> </li>
